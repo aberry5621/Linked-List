@@ -13,59 +13,77 @@
 struct ListNode {
     
     int dataPoint = NULL;
-    std::string name = " ";
+    std::string name = "\"default\"";
     ListNode * link = nullptr;
     
 };
 
 void printTheList(ListNode);
 
-int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Linked List!\n";
-    std::cout << "Build Linked List!\n";
-    std::cout << "Read Linked List!\n";
+int main() {
     
-    ListNode * headPtr = new ListNode;
-    ListNode * tmpPtr = new ListNode;
-    ListNode * tailPtr = new ListNode;
+    // set up initial pointers
+    ListNode * headPtr = nullptr;
+    ListNode * tailPtr = nullptr;
+    ListNode * tmpPtr;
+    
+    // set head pointer to new Node, ok
+    headPtr = new ListNode;
+    headPtr->name = "Head Pointer";
+    // set tail pointer to head pointer
+    tmpPtr = headPtr;
+    
+    for (int i = 0; i < 10; i++) {
+        if (i == 0) {
+            //first node
+            headPtr->name = "HP 0";
+            headPtr->dataPoint = i;
+            headPtr->link = nullptr;
+        } else if (i > 0 || i < 10) {
+            tmpPtr->link = new ListNode;
+            tmpPtr->name = "tmpPtr";
+            tmpPtr = tmpPtr->link;
+            tmpPtr->dataPoint=i;
+            tmpPtr->link = nullptr;
+        } else {
+            tailPtr->link = new ListNode;
+            tailPtr->name = "tailPtr";
+            tailPtr = tailPtr->link;
+            tailPtr->dataPoint=i;
+            tailPtr->link = nullptr;
+        }
+    }
+    
+    // insert some nodes
     
     
-    // link the trhee nodes
-    headPtr->link = tmpPtr;
-    tmpPtr->link = tailPtr;
-    tailPtr->link = nullptr;
     
-    headPtr->dataPoint = 0;
-    tmpPtr->dataPoint = 0;
-    tailPtr->dataPoint = 0;
-    
-    headPtr->name = "head";
-    tmpPtr->name = "temp";
-    tailPtr->name = "tail";
-
-    printTheList(* headPtr);
-    
+    printTheList(*headPtr);
     
     return 0;
 }
 
 void printTheList(ListNode inputNode) {
     
-    std::cout << "printList invoked\n";
+    std::cout << "printList invoked and passed \"inputNode\" \n";
+    std::cout <<
+    "inputNode info: " <<
+    "\nName: " << inputNode.name <<
+    "\nData Point: " << inputNode.dataPoint <<
+    " " << std::endl;
     
     int ListNodeCount = 0;
     
-    ListNode * readPtr = new ListNode;
+    ListNode * readPtr = nullptr;
+    // point read pointer at input node
+    readPtr = &inputNode;
     
-    readPtr->link = &inputNode;
-    
-    std::cout << "Reading ListNode: ";
+    std::cout << "Reading ListNodes:\n";
     while (readPtr != nullptr) {
         std::cout <<
         "#" << ListNodeCount <<
         " Name: " << readPtr->name <<
-        " Value: " << readPtr->dataPoint <<
+        " Data Point: " << readPtr->dataPoint <<
         " " << std::endl;
         readPtr = readPtr->link;
         ListNodeCount++;
